@@ -10,19 +10,14 @@ JAVA:
     }
     
 
-```JAVA
+
+
+```
     public class Zhu{
         public static mian(Stirng[] args){
             System.out.printf("");
             }
     }
  ```
+ \`nihao`nishi
  
- 
- ```
-    public class Zhu{
-        public static mian(Stirng[] args){
-            System.out.printf("");
-            }
-    }
- ```

@@ -1,4 +1,4 @@
-# 限制 EditText 最大输入字符数 --> Android
+# 限制 EditText 最大输入字符数 --&gt; Android
 
 
 ## 方法一：
@@ -112,6 +112,8 @@ java：
 
         }
     }
+    
+
 
 
  
