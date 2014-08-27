@@ -32,8 +32,9 @@
       
   但当要求无需点击menu就实现Actionbar改变时，
 解决的办法是在你要更新菜单项的地方加上：(原生Actionbar)
-  ```
- mActivity.getWindow().invalidatePanelMenu(Window.FEATURE_OPTIONS_PANEL);```
+ ```
+ mActivity.getWindow().invalidatePanelMenu(Window.FEATURE_OPTIONS_PANEL);
+ ```
  
  
  第三方（如ActionBarSherlock），那么调用：
@@ -43,7 +44,10 @@
  
  还有，在fragment中的onCreateOptionsMenu和Activity中的参数不同的，多了个        
  MenuInflater，所以在fragment中调用MenuInflater的时候，要这么调用：
-```MenuInflater inflater = this.getActivity().getMenuInflater();```
+ ```
+   MenuInflater inflater = this.getActivity().getMenuInflater();
+   ```
+
 ```java
     @Override
    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
