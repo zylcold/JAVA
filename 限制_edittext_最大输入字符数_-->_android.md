@@ -1,4 +1,4 @@
-# 限制 EditText 最大输入字符数 --&gt; Android
+# 限制 EditText 最大输入字符数 --&amp;gt; Android
 
 
 ## 方法一：
@@ -12,9 +12,10 @@
 
 在代码中使用InputFilter 进行过滤
 
-java:
 
-    public class TextEditActivity extends Activity {
+```java
+
+ 	public class TextEditActivity extends Activity {
    
         @Override
         public void onCreate(Bundle savedInstanceState) {
@@ -28,19 +29,20 @@ java:
         }
         
         
- editText.setFilters(new InputFilter[]{new 
-InputFilter.LengthFilter(20)}); 即限定最大输入字符数为20
-
+ 	editText.setFilters(new InputFilter[]{new 
+	InputFilter.LengthFilter(20)}); 即限定最大输入字符数为20
+```
 
 
 ## 方法三：
+
 
 利用 TextWatcher 进行监听
 
 
 自定义TextWatcher
-java:
-    
+
+```java   
     /*
      * 监听输入内容是否超出最大长度，并设置光标位置
      * */
@@ -93,12 +95,13 @@ java:
 	    }
 
     }
-    
+```
+
+
 调用自定义TextWatcher
-java：
 
    
-
+```java
     public class TextEditActivity extends Activity {
         /** Called when the activity is first created. */
         @Override
@@ -113,7 +116,7 @@ java：
         }
     }
     
-
+```
 
 
  

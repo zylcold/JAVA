@@ -19,5 +19,17 @@ JAVA:
             }
     }
  ```
+<<<<<<< HEAD
  \`nihao`nishi
  
+=======
+ 
+ 
+ ``` java
+    public class Zhu{
+        public static mian(Stirng[] args){
+            System.out.printf("");
+            }
+    }
+ ```
+>>>>>>> FETCH_HEAD
