@@ -44,15 +44,13 @@
  
  还有，在fragment中的onCreateOptionsMenu和Activity中的参数不同的，多了个        
  MenuInflater，所以在fragment中调用MenuInflater的时候，要这么调用：
- ```
-   MenuInflater inflater = this.getActivity().getMenuInflater();
-   ```
+ MenuInflater inflater = this.getActivity().getMenuInflater();
 
 ```java
-    @Override
-   public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+     @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         // 在onCreateOptionsMenu（）之前必须在onCreate中调用        
         setHasOptionsMenu（true）
         inflater.inflate(R.menu.menu_three, menu);   
         super.onCreateOptionsMenu(menu, inflater);
-}```
+}
