@@ -99,7 +99,32 @@
 
     在Java中，通过getField()方法或getFields()方法访问字段(成员变量)时，将返回Field类型的对象或数组。每个Field对象代表一个字段（成员变量），利用Field对象提供的相关方法可以访问对应字段。
 
- 
+14. ###在Java语言规范中，对equals()方法有何要求？
+
+    * 自反性：对于任何非空引用值x，x.equals(x)都应返回true；
+    * 对称性：对于任何非空引用值x和y，当且仅当y.equals（x）返回true时，x.equals（y）才应返回true；
+    * 传递性：对于任何非空引用值x，y和z，如果x.equals（y）返回true，并且y.equals（z）返回true，那么
+        x.equals（z）应返回true； 
+    * 一致性：对于任何非空引用值x和y，多次调用x.eqyals（y）返回true或始终返回false；
+    * 对于任何非空引用值x，x.equals（null）都应返回false。
+    * 在重写equals（）方法时，通常也需要重写hashCode（）方法。
+    
+## 字符串与包装类
+15. int和integer有什么区别？
+
+    java提供了两种不同的类型，即引用类型和基本类型。为实现基本数据类型到面向对象的转化，java为每个基本数据类型提供了对应的包装类（封装包）。boolean <-> Boolean , float <-> Float, char <-> Character, byte <-> Byte , int <-> Integer, double <-> Double, short <-> Short, long <-> Long;
+    int是Java的基本数据类型，Integer是包装类。Java将包装类作为对象使用，而基本数据类型不是对象。
+    JDK5.0中新增了自动装包，拆包机制，实现包装类和基本数据类型之间的自动转换。无需手动转换。
+
+
+16. 时间日期格式化
+
+       转换符 | 含义                    |显示方式
+       ---- | ----------------------  | --------
+       %td   | 一月中的第几天（01～31）   | 05
+       %te   |一月中的第几天（1～31）     | 5
+       
+   
 
 
 
