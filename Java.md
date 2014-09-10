@@ -190,7 +190,7 @@
            迭代过程中删除集合中的元素，如实现过滤功能。
            并行迭代多元素。
   
-   一个简单例子：
+   一个简单例子:
        
        
        public static void main(String[] args){
@@ -210,8 +210,125 @@
  
  迭代器更灵活。
  
-       
-   
+16. ###Iterator接口与ListInterator接口
+
+
+  
+    |            | ListIterator       | Iterator   |
+    |------------ |------------------- | --------  |
+    |遍历方向      | 序号由小至大和由大至小 | 序号由小至大|
+    |遍历中修改元素 |     支持            | 不支持     |    
+    |遍历中增加元素 |     支持            | 不支持     |
+    |遍历到的元素符号|    可以获得         | 不能获得   |           
+    
+17. ###Iterator 和 Enumeration 区别
+
+    Iterator 是在Java SE 1.2中新增。
+    Enumeration 是在Java SE 1.0 定义的。
+    
+    相对于Enumeration 新增了remove() 方法
+    Enumeration 中hasMoreElements() <==> hasNext()
+    Enumeration 中nextElement() <==> next()
+    
+    Iterator 目的是取代 Enumeration 
+    
+18. ###ArrayList 和 LinkedList 区别
+
+    ArrayList类相当于数据结构中的线性表，它在底层使用数组来存储元素，因此适合快速的获取指定位置的元素。当删除和添加元素时，后面的元素位置要发生变化，开销较大。
+    LinkedList类相当于数据结构中的链表，它在底层使用对象来保存元素。因此适合元素的增加和删除，但是，获得指定元素是，要从头开始遍历，开销较大。
+    
+    在开发过程中，同长采用面向接口的编程方法。
+    List<String> list = new ArrayList<String>();
+    此时如果需要从列表中删除元素，可以将实现类换成LinkedList，如下：
+    list ＝ new LinkedList<String>();
+    
+19. ###ArrayList 和 Vector区别
+    
+    Verctor是在JDK1.0 中提供的集合类，ArrayList是在JDK1.2 提供的集合类，
+    Verctor类中有些方法是支持同步的。Verctor类适合于需要线程安全的场合。
+    Verctor类的效率比ArrayList差。 
+    
+20. ###Map接口特性。
+
+    Map接口通常由2个常用实现类。
+    HashMap 用于快速保存，查找数据。
+    TreeMap 支持排序功能。
+    LinkedMap 能够保存键值的添加顺序。
+ 
+
+
+##数学
+21. ###随机数
+
+    1. 平方取中法。＝》最终会退化到0，无法继续产生随机数。
+    2. 线性同余法。（Random类使用的算法）
+    
+    在java中
+    1. 使用Math类中的random()方法
+        返回一个0.0到1.0之间的伪随机数。包括0.0 不包括 1.0
+    2. 使用Random类。   
+    
+22. ### 完成高精度整数运算
+
+    BigInteger类。
+    add() +
+    subtract() -
+    multiply() *
+    divide() /
+    remainder() %
+    negte() -this 相反数
+    abs() |this|
+    divideAndRemainder() this/val 的商和余数，结果是BigInteger数组
+    gcd()返回this和val的最大公约数
+    max()this，val的最大值
+    min()this,val的最小值
+    signum()this的符号。正数为1，负数为－1，0为0
+    
+    Java:
+    
+        BigInteger number1 ＝ new BigInteger（“13”）;
+        number1.negte()
+23. ### 完成高精度浮点数运算
+
+    DigDecimal类
+    方法同上。
+    
+##异常
+
+##输入／输出
+1. 字节输入流：InputStream类
+    所有字节输入流的父类，抽象类。
+    FileInputStream：使用字节方式读取文件，通常用于读取非字符类型文件。
+    ObjectInputStream：用于读取ObjectOutputStream保存的对象。
+    BufferedInputStream：用于缓冲字节输入流。
+    ZipInputStream：用于读取ZIP文件格式的数据。
+2. 字节输出流： OutputStream
+    同上。
+    FilOutputStream：使用字节方式写入文件，通常用于写入非字符类型文件
+    ObjectOutputStream：用于输出java对象。
+    BufferedOutputStream：用于缓冲字节输出流。
+    ZipOutStream：用于写入ZIP文件格式的数据。
+3. 字符输入流：Reader类。
+    同上。
+    InputStreamReader：从字节流到字符流转换的桥梁。
+    BufferedReader：用于缓冲字符输入对象。
+    FileReader：用于从文件中读取字符。
+4. 字符输出流：Writer类
+    同上。
+    OutputStreamWrite：用于从字节流到字符流转换的桥梁。
+    BufferedWriter： 用于缓冲字符输出对象。
+    FileWriter：用于向文件中写入字符。
+    PrintWriter：向文本输出流打印对象格式化表示。
+      
+
+
+
+ 
+     
+    
+
+ 
+  
 
 
 
