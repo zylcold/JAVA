@@ -320,6 +320,80 @@
     FileWriter：用于向文件中写入字符。
     PrintWriter：向文本输出流打印对象格式化表示。
       
+5. 如何在磁盘上创建文件。
+
+   File类中提供了创建文件和文件夹的方法。
+   creatNewFile() 当文件不存在时创建。
+   mkdir() 用于创建一个文件夹
+   mkdirs() 用于创建一个文件夹，支持自动创建其他必须文件夹
+   
+   在日常开发中 mkdirs()更为常用。
+   
+6. 如何创建临时文件。
+
+    在File类中，提供了两种创建临时文件的方法。    
+    * 在默认的临时文件夹中创建临时文件。
+        createTempFile(String prefix, String suffix);
+        prefix 是临时文件名的前缀。至少3个字符
+        suffix 是临时文件的后缀，如果为null ，则使用.tmp
+        
+   * 在指定文件夹中创建临时文件
+       creatTempFile(String prefix, String suffix, File directory);
+       directory 是指定的文件夹。
+       
+   > 使用临时文件来保存程序运行中生成的信息，虽然简化了编程，但也增加了系统的负担。
+   
+7. 如何获得磁盘中的全部文件？
+
+    使用File类中提供的listFile() 方法，可以获得当前文件夹中包含的全部文件和子文件夹，通过递归可获得全部文件。
+    
+    在File类中并没有直接提供获得指定文件夹中全部文件的方法，但可通过简单的递归实现，但一定要注意推出递归的条件，避免出现死循环。
+    
+    
+8. 有关JAVA 1.4 新加入的NIO包。
+
+    在javaIO中，使用流来读写数据，即每次处理一个字节。效率并不理想。后来加入的缓冲类，如BufferedReader类提高效率。
+    在NIO中，使用块来读写数据，即每次处理一个数据库。能大幅提高效率，缺点时失去流方式所具有的优雅和简单的特性。
+    新IO中核心对象包括通道（Channel）和缓冲区（Buffer）。
+    通道是对原IO流的模拟，数据的传递是通过通道完成。发送给通道的数据先放入缓冲区，从通道读取数据也要先读到缓冲区。
+    缓冲区；新IO包含的缓冲区有ByteBuffer，ShortBuffer，IntBuffer，LongBuffer，FloatBuffer，DoubleBuffer。 
+    通道：不需要定义InputStream和OutputStream对象即可完成数据读写操作。同时通道中的数据是以块为单位，因此不能将字节写入通道。
+    在JDK 7 中新增了NIO.2来简化文件的相关操作。
+
+     
+9. 使用NIO进行读写操作
+
+    * 使用NIO读数据
+    
+        1. 从FileInputStream 类中获得FileChannel对象。
+        2. 创建缓冲区Buffer。
+        3. 将数据从FileChannel读入Buffer中
+        
+     java:
+     
+            FileInputStream fis = null;
+            fis = new FileInputStream("src/image/readerme.txt");
+            FileChannel channel = fis.getChannel();
+            ByteBuffer buffer = ByteBuffer.allocate(1024);
+            channel.read(buffer);
+            System.out.println(new String(buffer.array()));
+    * 使用NIO写数据
+    
+        1. 从FileOutputStream 类中获得FileChannel对象。
+        2. 创建缓冲区Buffer并放入要写出的数据。
+        3. 将缓冲区Buffer中的数据使用通道写入文件中。
+   
+   java:
+              
+        String message = "Java Programing Dictionary is a wonderful teacher for
+                             you";
+        FileOutputStream fos = null;
+        fos = new FileOutputStream("src/image/readerme.txt");
+        FileChannel channel = fos.getChannel();
+        ByteBuffer buffer = ByteBuffer.allocate(1024);
+        buffer.put(message.getBytes());
+        buffer.flip();
+        channel.write(buffer);
 
 
 
