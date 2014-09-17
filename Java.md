@@ -394,15 +394,230 @@
         buffer.put(message.getBytes());
         buffer.flip();
         channel.write(buffer);
+10. 内存映射文件IO
 
+    内存映射文件IO是一种读写的方式，比继续流和通道的方式快很多。
+    在NIO中提供了内存映射文件IO的功能，有3种方式。
+   
+    方式名称       |  方式说明
+    -------------|------------------------------------------
+    PRIVATE      | 缓冲可读写，但不会影响到文件
+    READ_ONLY    | 缓冲只读，如果写入会抛出ReadOnlyBufferException
+    READ_WRITE   | 缓冲可读写，修改会影响文件
+    
+    
 
 
  
      
-    
+## 枚举类型与范型
 
+1. 枚举类型
+
+    枚举类型用来表示由固定常量组成的集合。1.5新增。
+    定义枚举类型时使用enum关键字。保存元素名称是使用大写。
  
+  java: 
+     
+        public enum Dire{
+            EAST,
+            SOUTH,
+            WEST,
+            NORTH,
+        }            
+  调用Dire.EAST
+     
+  优势：
   
+  1. 枚举类型都继承了Enum类。包含了常用的枚举操作。
+  2. 枚举类型中可以增加域和方法。
+  3. 编译器自动为枚举类型中增加新方法。
+      编译器在遇到枚举类型时，自动为其增加values()和valueOf()方法。前者返回一个包含全部枚举的数
+      组。后者返回当前字符串对应的枚举元素。
+      
+      使用编译器增加的values()来遍历全部元素。
+      
+      java:
+      
+          public class Text{
+              public static void main(String[] args){
+                  for(Dire d : Dire.values()){
+                      System.out.println(d);
+                  }
+              }
+          }
+2. 在枚举中定义域和方法。
+
+    与普通类的差异：
+    * 枚举元素要写在域和方法前。
+    * 编写完枚举元素需要使用分号分割域和方法。
+    * 如果编写构造方法，则要在定义枚举元素时体现。
+      在编写构造方法是，注意在其方法权限修饰符只有private和无权限修饰符（包范围可见）
+      枚举类型会自动创建枚举元素，但不能使用构造方法创建枚举类型对象。
+      
+    java:
+    
+        public enum PizzaInfor {
+            SMALL(8, 2.0, "小号巴萨"), MIDDLE(10, 1.8, "中号巴萨"), LARGE(12, 1.7, "大
+                      号巴萨"),;
+            private int size;
+            private double price;
+            private String description;
+            private PizzaInfor(int size, double price, String description){
+                this.description = description;
+                this.price = price;
+                this.size = size;
+            }
+
+            @Override
+            public String toString() {
+                return description + "的价格：" + size * price + "元";
+            }  
+        }
+3. 协变。
+
+    在java中，数组支持协变。
+    e.g. :
+        
+        Integer[] intArray = new Integer[5];
+        Number[] numArray = new Number[5];
+        
+    但对于范型而言不支持协变，因为这样会破坏类型安全。
+    
+    
+4. 范型中的擦除。
+
+    在程序编译后，会将范型中的类型信息擦出。
+    如：
+        
+        boobean result ＝ （new ArrayList<Number>().getClass() == new 
+            ArrayList<Integer>().getClass()）;  
+    result ==> true
+    
+    由于擦除机制，导致很多常用功能不能实现，如创建范型化数组。
+    
+        T［］ array ＝ new T ［10］；
+    此时可以利用java的反射机制，
+java:
+
+        public static <T> T[] createGenericArray(Class<T> type, int size){
+            return (T[])Array.newInstance(type, size);
+        }
+      
+        
+  
+## 线程
+
+1. 创建新线程。
+
+    1. 继承Thread类。
+    2. 实现Runnable借口。
+    通常推荐使用实现Runnable接口实现新线程。
+    
+2. 线程中的常见属性。
+
+    ID属性：用于标示线程，可使用Thread类中的getId（）方法获得该属性，不许修改。
+    
+    Name属性：用于标示线程，主要是为了方便程序区分线程。通过getName()和setName()获取和设置。
+    
+    Priority属性：用于标示线程的优先级。java线程优先级范围1～10.可以通过
+        getPriority(),setPriority() 获取和设置。
+        
+    Daemon属性：用于表示线程是否是守护线程。守护线程的作用是为其他线程提供服务。如果系统中仅剩下守
+     护线程，则虚拟机会退出。可以使用setDaemon()设置线程。
+  
+3. 导致线程停止的几种状况。
+
+    * 线程在执行时，抛出InterruptedException异常。
+    * 线程执行了sleep()方法。
+    * 更高优先级的程序处于可运行状态。
+    * 如果当前线程执行了InputStream类中的read()方法。
+ 
+4. Object类中提供哪些线程相关方法。
+
+    定义了3个与线程密切相关的方法，即wait(),notify()和notifyAll()。其中wait()中具有3种重载形
+        式。  
+    
+    notify()方法：唤醒在此对象监视器上等待的线程。
+    notifyAll()方法：唤醒在此对象监视器上等待的所有线程。
+    wait()方法：线程处于等待状态，直到其他线程调用此对象的notify()或notifyAll()
+    wait(long timeout)方法：毫秒级
+    wait(long timeout, int nanos)方法：时间精度是纳秒级。
+    
+    
+5. 创建有返回值的线程
+
+    使用Callable接口可以创建有返回值的线程。
+    
+    接口定义如下:
+    
+        public interface Callable<T>{
+            V call() thorow Exception;
+        }  
+  
+     
+     
+6. 线程池
+
+    如果系统中需要创建大量短声明周期的线程，则应该使用线程池。
+    
+    在java SE 5.0 新增加了创建线程池的Executors类，提供了一些静态方法用于获得线程池。
+    
+    newCachedThreadPool()创建的线程池可以没有可用线程时创建一个新线程。
+    
+    newFixedTreadPool() 可以创建一个固定大小的线程池。
+    
+    线程池使用完毕后应使用ExecutorService借口中定义的shutdown()方法关闭线程。
+     
+    
+    java中还提供了类似线程池的线程组类（TreadGroup类）。
+    
+    
+7. 终止线程
+  
+ 
+   不推荐使用stop()和suspend()
+   stop()方法在线程终止之前没有对其做任何的清楚操作，不具有安全性。
+   suspend()方法，具有固有的死锁倾向。如果目标进程挂起时在保护关键系统关键资源的监视器上保持有锁，则在目标进程重新开始之前任何进程都不能访问该资源。如果重新开始目标进程的线程想再调用resume()之前锁定改监视器，则会发生死锁现象。
+   推荐利用boolean值来终止运行中的进程。
+   
+  java:
+  
+      private class Zhu implements Runnable{
+          private boolean stopped = true;
+          public void setStopped(boolean stopped){
+              this.stopped = stopped;
+          }
+          
+          public void run(){
+              while(stoped){
+                  System.out.println("");
+              }
+          }
+          
+      }
+      
+ 还可以使用isInterrupted()方法和Interrupted()方法实现线程的安全终止。
+ 
+8. 同步锁解决共享资源的冲突；
+
+    java:
+    
+        public class SysncLockDemo{
+            private finnal ReentratLock lock = new ReetratLock(); //创建锁
+            //实现同步方法。
+            public void synMethod(){
+                locl.lock() //加锁
+                try{
+                    //功能代码
+                }finally{
+                   lock.unlock() //释放锁
+                }
+            }
+        }
+  
+   >同步锁是从JDK 1.5 开始。
+
 
 
 
