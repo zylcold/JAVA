@@ -13,7 +13,8 @@ XML：
         android:id="@+id/menu_search" 
         android:icon="@android:drawable/ic_menu_search"
         android:title="@string/action_search"
-        android:actionViewClass="android.widget.SearchView"
+        android:actionViewClass="android.widget.SearchView" //千万不要忘，
+                                                           //不然下面会产生空指针
         android:showAsAction="ifRoom|collapseActionView" />
     </menu>
     
@@ -43,6 +44,8 @@ JAVA：
 ##相应调用的方法。
 
 JAVA：
+
+    对应接口onQueryListener
 
 	//点击回车结束输入时执行 
 	@Override
